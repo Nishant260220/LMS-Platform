@@ -17,6 +17,9 @@ The LMS allows instructors to upload and manage video-based courses. Students (u
 
 ## Technologies Used
 
+### Common:
+- TypeScript
+
 ### Frontend:
 - Next.js (App Router)
 - React
