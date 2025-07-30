@@ -14,11 +14,15 @@ The LMS allows instructors to upload and manage video-based courses. Students (u
 - Authentication using NextAuth.js
 - UI components built using Shadcn UI
 - Lucide icons for sidebar menu
+- Create Course page with title input
+- Form validation using React Hook Form, Shadcn and Zod
+- Toast notifications using React Hot Toast
 
 ## Technologies Used
 
 ### Common:
 - TypeScript
+- zod
 
 ### Frontend:
 - Next.js (App Router)
@@ -26,6 +30,9 @@ The LMS allows instructors to upload and manage video-based courses. Students (u
 - Tailwind CSS
 - Shadcn UI
 - Lucide Icons
+- React Hook Form (for form state handling)
+- Zod (for form validation)
+- React Hot Toast (for user notifications)
 
 ### Backend:
 - NextAuth.js (Authentication)
