@@ -17,6 +17,7 @@ The LMS allows instructors to upload and manage video-based courses. Students (u
 - Create Course page with title input
 - Form validation using React Hook Form, Shadcn and Zod
 - Toast notifications using React Hot Toast
+- Prisma ORM configured with PostgreSQL and models: Course, Category, Attachment
 
 ## Technologies Used
 
