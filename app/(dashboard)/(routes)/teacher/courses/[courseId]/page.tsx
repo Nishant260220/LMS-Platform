@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import TitleForm from "./_components/title-form";
 import DescriptionForm from "./_components/description-form";
+import ImageForm from "./_components/image-form";
 
 
 const courseIdPage = async ({ params }: { params: { courseId: string } }) => {
@@ -55,7 +56,9 @@ const courseIdPage = async ({ params }: { params: { courseId: string } }) => {
           </div>
           <TitleForm initialData={course} courseId={course.id} />
 
-          <DescriptionForm initialData={{ description: course.description || "" }} courseId={course.id} />
+          <DescriptionForm initialData={course} courseId={course.id} />
+
+          <ImageForm initialData={course} courseId={course.id} />
         </div>
       </div>
     </div>

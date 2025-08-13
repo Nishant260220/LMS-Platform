@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@tailwind utilities;
 
 html,
 body,
@@ -126,3 +127,5 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+
