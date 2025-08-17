@@ -29,7 +29,6 @@ export async function PATCH(
     }
 
     // Step 2: Update course
-    console.log("Values:", values);
     const course = await db.course.update({
       where: {
         id: courseId,
@@ -41,7 +40,6 @@ export async function PATCH(
     });
     return new NextResponse("course updated successfully");
   } catch (error) {
-    console.log("[COURSE_ID]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
