@@ -9,14 +9,15 @@ export async function PATCH(
 ) {
   const session = await getServerSession(authOptions);
  
-  const values = await req.json();  
+  const values = await req.json(); 
+   
    
   try {
     if (!session) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
     const userId = session.user?.name;
-    const courseId = params.courseId;
+    const { courseId } = await params;
 
      // Step 1: Check ownership
 
