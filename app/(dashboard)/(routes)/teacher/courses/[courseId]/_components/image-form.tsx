@@ -12,7 +12,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import {Course} from '@prisma/client'
+import {Attachment, Course} from '@prisma/client'
 import { FileUpload } from "@/app/(dashboard)/_components/file-upload";
 
 const formSchema = z.object({
@@ -22,7 +22,7 @@ const formSchema = z.object({
 });
 
 interface ImageFormProps {
-  initialData:Course;
+  initialData:Course,
   courseId: string;
 }
 

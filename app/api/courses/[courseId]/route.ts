@@ -13,13 +13,12 @@ export async function PATCH(
    
    
   try {
-    if (!session) {
+    if (!session?.user) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
-    const userId = session.user?.name;
+    const userId = session?.user?.id;
     const { courseId } = await params;
 
-     // Step 1: Check ownership
 
     const existingCourse = await db.course.findUnique({
       where: { id: courseId },
@@ -29,7 +28,6 @@ export async function PATCH(
       return new NextResponse("Forbidden", { status: 403 });
     }
 
-    // Step 2: Update course
     const course = await db.course.update({
       where: {
         id: courseId,

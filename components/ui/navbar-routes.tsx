@@ -22,7 +22,7 @@ export const NavbarRoutes = () => {
     );
   }
 
-  const name = session.user.name || "User";
+  const name = session?.user?.name || "User";
   const firstLetter = name.charAt(0).toUpperCase();
 
   const isTeacherPage = pathName?.startsWith("/teacher");
