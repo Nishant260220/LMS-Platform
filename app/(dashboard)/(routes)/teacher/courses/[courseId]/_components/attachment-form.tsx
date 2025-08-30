@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {Attachment, Course} from '@prisma/client'
-import { FileUpload } from "@/app/(dashboard)/_components/file-upload";
+import { FileUpload } from "@/components/file-upload";
 import { id } from "zod/v4/locales";
 
 const formSchema = z.object({
