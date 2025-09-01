@@ -9,6 +9,89 @@ const { video } = new Mux({
   tokenSecret: process.env.MUX_TOKEN_SECRET!,
 });
 
+export async function DELETE(
+   req: Request,
+  { params }: { params: { courseId: string; chapterId: string } }
+){
+  try{
+    const session = await getServerSession(authOptions);
+    const { courseId, chapterId} = await params;
+    const userId = session?.user?.id;
+
+    if(!userId){
+      return new NextResponse("Unauthorized", { status: 401});
+    }
+
+    const ownCourse = await db.course.findUnique({
+      where: {
+        id: courseId,
+        userId
+      }
+    });
+
+    if(!ownCourse){
+      return new NextResponse("Unauthorized", { status: 401});
+    }
+
+    const chapter = await db.chapter.findUnique({
+      where: {
+        id: chapterId,
+        courseId: courseId,
+      }
+    });
+
+    if(!chapter){
+      return new NextResponse("Not found", { status: 404});
+    }
+
+    if(chapter.videoUrl){
+      const existingMuxData = await db.maxData.findFirst({
+        where: {
+          chapterId: chapterId,
+        }
+      });
+
+      if(existingMuxData){
+        await video.assets.delete(existingMuxData.assetId);
+        await db.maxData.delete({
+          where: {
+            id: existingMuxData.id,
+          }
+        });
+      }
+    }
+
+    const deletedChapter = await db.chapter.delete({
+      where: {
+        id: chapterId,
+      }
+    }) ;
+
+    const publishChaptersInCourse = await db.chapter.findMany({
+      where: {
+        courseId: courseId,
+        isPublished: true,
+      }
+    });
+
+    if(!publishChaptersInCourse.length){
+      await db.course.update({
+        where: {
+          id: courseId,
+        },
+        data: {
+          isPublished: false,
+        }
+      });
+    }
+
+    return NextResponse.json(deletedChapter);
+
+  }catch (error){
+    console.log("[CHAPTER_ID_DELETE",error);
+    return new NextResponse("Internal Error", { status: 500});
+  }
+}
 export async function PATCH(
   req: Request,
   { params }: { params: { courseId: string; chapterId: string } }

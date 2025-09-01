@@ -56,7 +56,7 @@ const ChapterVideoForm = ({ initialData, courseId, chapterId }: ChapterVideoForm
           {!isEditing && !initialData.videoUrl && (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Add an image
+              Add a video
             </>
           )}
           {!isEditing && initialData.videoUrl && (
