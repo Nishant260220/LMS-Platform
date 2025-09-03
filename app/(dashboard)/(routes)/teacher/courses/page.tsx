@@ -1,15 +1,34 @@
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import React from 'react'
 
-const CoursesPage = () => {
+import { DataTable } from './_components/data-table'
+import { columns } from './_components/columns'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { redirect } from 'next/navigation'
+import db from '@/lib/db'
+
+ 
+const CoursesPage = async() => {
+
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
+
+  if(!userId){
+    return redirect("/");
+  }
+ 
+   const courses = await db.course.findMany({
+    where: {
+      userId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    }
+   });
+
+
   return (
     <div className='p-6'>
-      <Link href={"/teacher/create"}>
-      <Button>
-        New Course
-      </Button>
-      </Link>
+      <DataTable columns={columns} data={courses} />
     </div>
   )
 }
