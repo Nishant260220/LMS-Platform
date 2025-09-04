@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
+import { SearchInput } from "./search-input";
 
 export const NavbarRoutes = () => {
   const { data: session } = useSession();
@@ -14,9 +15,7 @@ export const NavbarRoutes = () => {
     return (
       <div className="ml-auto">
         <Link href="/api/auth/signin">
-          <Button>
-            Login
-          </Button>
+          <Button>Login</Button>
         </Link>
       </div>
     );
@@ -27,26 +26,34 @@ export const NavbarRoutes = () => {
 
   const isTeacherPage = pathName?.startsWith("/teacher");
   const isPlayerPage = pathName?.includes("/chapter");
+  const isSearchPage = pathName === "/search";
 
   return (
-   <div className="flex gap-x-2 ml-auto">
-    {isTeacherPage || isPlayerPage ? (
-     <Link href="/">
-      <Button size="sm" variant="ghost">
-        <LogOut className="w-4 h-4 mr-2" />
-        Exit
-      </Button>
-     </Link>
-    ):(
-       <Link href="/teacher/courses">
-        <Button size="sm" variant="ghost">
-          Teacher mode
-        </Button>
-       </Link>
-    )}
-     <div className="w-9 h-9 rounded-full bg-sky-500 text-white flex items-center justify-center font-semibold">
-      {firstLetter}
-    </div>
-   </div>
+    <>
+      {isSearchPage && (
+        <div className="hidden md:block">
+          <SearchInput />
+        </div>
+      )}
+      <div className="flex gap-x-2 ml-auto">
+        {isTeacherPage || isPlayerPage ? (
+          <Link href="/">
+            <Button size="sm" variant="ghost">
+              <LogOut className="w-4 h-4 mr-2" />
+              Exit
+            </Button>
+          </Link>
+        ) : (
+          <Link href="/teacher/courses">
+            <Button size="sm" variant="ghost">
+              Teacher mode
+            </Button>
+          </Link>
+        )}
+        <div className="w-9 h-9 rounded-full bg-sky-500 text-white flex items-center justify-center font-semibold">
+          {firstLetter}
+        </div>
+      </div>
+    </>
   );
 };
