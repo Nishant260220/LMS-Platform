@@ -32,7 +32,7 @@ const ChapterIdPage = async ({
       courseId: courseId,
     },
     include: {
-      maxData: true,
+      muxData: true,
     },
   });
 

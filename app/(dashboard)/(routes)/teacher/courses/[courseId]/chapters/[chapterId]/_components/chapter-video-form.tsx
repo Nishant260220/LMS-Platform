@@ -11,7 +11,7 @@ import { Pencil, PlusCircle, Video } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { Chapter, MaxData} from '@prisma/client'
+import { Chapter, MuxData} from '@prisma/client'
 import { FileUpload } from "@/components/file-upload";
 
 const formSchema = z.object({
@@ -19,7 +19,7 @@ const formSchema = z.object({
 });
 
 interface ChapterVideoFormProps {
-  initialData: Chapter & { muxData?: MaxData | null},
+  initialData: Chapter & { muxData?: MuxData | null},
   courseId: string;
   chapterId: string;
 }
