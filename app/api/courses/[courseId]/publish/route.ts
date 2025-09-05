@@ -24,7 +24,7 @@ export async function PATCH(
             include: {
                 chapters: {
                     include: {
-                        maxData: true,
+                        muxData: true,
                     }
                 }
             }

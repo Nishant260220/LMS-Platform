@@ -34,7 +34,7 @@ export async function PATCH(
             }
         });
 
-        const muxData = await db.maxData.findUnique({
+        const muxData = await db.muxData.findUnique({
             where: {
                 chapterId: chapterId,
             }

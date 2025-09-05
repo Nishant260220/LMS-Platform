@@ -45,7 +45,7 @@ export async function DELETE(
     }
 
     if(chapter.videoUrl){
-      const existingMuxData = await db.maxData.findFirst({
+      const existingMuxData = await db.muxData.findFirst({
         where: {
           chapterId: chapterId,
         }
@@ -53,7 +53,7 @@ export async function DELETE(
 
       if(existingMuxData){
         await video.assets.delete(existingMuxData.assetId);
-        await db.maxData.delete({
+        await db.muxData.delete({
           where: {
             id: existingMuxData.id,
           }
@@ -127,7 +127,7 @@ export async function PATCH(
     });
 
     if(values.videoUrl){
-        const existingMuxData = await db.maxData.findFirst({
+        const existingMuxData = await db.muxData.findFirst({
              where: {
                 chapterId: chapterId,
             }
@@ -135,7 +135,7 @@ export async function PATCH(
 
         if(existingMuxData){
             await video.assets.delete(existingMuxData.assetId);
-            await db.maxData.delete({
+            await db.muxData.delete({
                 where: {
                     id: existingMuxData.id,
                 }
@@ -152,7 +152,7 @@ export async function PATCH(
            test: false,
         });
 
-        await db.maxData.create({
+        await db.muxData.create({
             data: {
                 chapterId: chapterId,
                 assetId: asset.id,

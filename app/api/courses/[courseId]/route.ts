@@ -30,7 +30,7 @@ export async function DELETE(
         include: {
           chapters: {
             include: {
-              maxData: true,
+              muxData: true,
             }
           }
         }
@@ -41,8 +41,8 @@ export async function DELETE(
     }
 
     for(const chapter of course.chapters){
-      if(chapter.maxData?.assetId){
-        await video.assets.delete(chapter.maxData.assetId);
+      if(chapter.muxData?.assetId){
+        await video.assets.delete(chapter.muxData.assetId);
       }
     }
 
