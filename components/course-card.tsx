@@ -1,7 +1,8 @@
-import { BookOpen, Link } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import Image from "next/image";
 import { IconBadge } from "./icon-badge";
 import { formatPrice } from "@/lib/format";
+import Link from "next/link";
 
 
 interface CourseCardProps{

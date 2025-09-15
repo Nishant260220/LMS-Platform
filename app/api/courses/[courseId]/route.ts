@@ -65,7 +65,7 @@ export async function PATCH(
   { params }: { params: { courseId: string } }
 ) {
   const session = await getServerSession(authOptions);
- 
+  
   const values = await req.json(); 
    
    
