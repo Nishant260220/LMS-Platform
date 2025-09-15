@@ -5,45 +5,35 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 const f = createUploadthing();
 
-const handleAuth = async (req: Request) => {
+const handleAuth = async () => {
   console.log("Handling auth");
   const session = await getServerSession(authOptions);
-  const user = session?.user?.id;
-  if (!user) throw new UploadThingError("Unauthorized");
-  return { userId: user };
+  const userId = session?.user?.id;
+  if (!userId) throw new UploadThingError("Unauthorized");
+  return { userId: userId };
 };
 
 export const ourFileRouter = {
   courseImage: f({
     image: { maxFileSize: "4MB", maxFileCount: 1 },
   })
-    .middleware(async ({ req }) => {
-      console.log("🔥 Middleware entered");
-      return await handleAuth(req); // ✅ direct return awaited result
-    })
-    .onUploadComplete(async ({ file }) => {
-      console.log("Upload complete for", file.name);
-      return { ufsUrl: file.ufsUrl }; 
+    .middleware(async ({}) => await handleAuth())
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Upload complete for", metadata.userId);
+      console.log("file url", file.ufsUrl);
     }),
   courseAttachment: f(["audio", "pdf", "video", "image", "text"])
-    .middleware(async ({ req }) => {
-      console.log("🔥 Middleware entered");
-      return await handleAuth(req); // ✅ direct return awaited result
-    })
-    .onUploadComplete(async ({ file }) => {
-      console.log("Upload complete for", file.name);
-      return { ufsUrl: file.ufsUrl }; 
+    .middleware(async ({}) => await handleAuth())
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Upload complete for", metadata.userId);
+      console.log("file url", file.ufsUrl);
     }),
   chapterVideo: f({ video: { maxFileCount: 1, maxFileSize: "512GB" } })
-    .middleware(async ({ req }) => {
-      console.log("🔥 Middleware entered");
-      return await handleAuth(req); // ✅ direct return awaited result
-    })
-    .onUploadComplete(async ({ file }) => {
-      console.log("Upload complete for", file.name);
-      return { ufsUrl: file.ufsUrl }; 
+    .middleware(async ({}) => await handleAuth())
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Upload complete for", metadata.userId);
+      console.log("file url", file.ufsUrl);
     }),
-    
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;
