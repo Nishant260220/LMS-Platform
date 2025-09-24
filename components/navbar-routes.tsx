@@ -6,10 +6,12 @@ import { Button } from "./ui/button";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { SearchInput } from "./search-input";
+import { isTeacher } from "@/lib/teacher";
 
 export const NavbarRoutes = () => {
   const { data: session } = useSession();
   const pathName = usePathname();
+  const userId = session?.user?.id;
 
   if (!session?.user) {
     return (
@@ -43,13 +45,13 @@ export const NavbarRoutes = () => {
               Exit
             </Button>
           </Link>
-        ) : (
+        ) : isTeacher(userId) ? (
           <Link href="/teacher/courses">
             <Button size="sm" variant="ghost">
               Teacher mode
             </Button>
           </Link>
-        )}
+        ) : null }
         <div className="w-9 h-9 rounded-full bg-sky-500 text-white flex items-center justify-center font-semibold">
           {firstLetter}
         </div>
