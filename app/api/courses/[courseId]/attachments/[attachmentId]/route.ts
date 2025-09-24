@@ -12,7 +12,8 @@ export async function Delete(
         const userId = session?.user?.id;
         const { courseId } = await params;
         const { attachmentId } = await params;
-        if(!session?.user){
+
+        if(!userId){
             return new NextResponse("Unauthorised", { status: 401})
         }
         const courseOwner = await db.course.findUnique({

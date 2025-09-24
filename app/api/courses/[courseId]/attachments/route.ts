@@ -1,5 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 import db from "@/lib/db";
+import { isTeacher } from "@/lib/teacher";
 import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
 
@@ -11,7 +12,7 @@ export async function POST(req: Request, {params}: {params: {courseId: string}})
         const { courseId } = await params;
         const userId = session?.user?.id;
 
-        if(!session?.user){
+        if(!userId){
             return new NextResponse("Unauthorised", {status: 401})
         }
 

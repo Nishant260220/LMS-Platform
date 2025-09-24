@@ -11,37 +11,37 @@ const { video } = new Mux({
 
 export async function DELETE(
   req: Request,
-  { params }: { params: {courseId: string}}
-){
-  try{
+  { params }: { params: { courseId: string } }
+) {
+  try {
     const session = await getServerSession(authOptions);
     const { courseId } = await params;
     const userId = session?.user?.id;
-    
-    if(!userId){
-      return new NextResponse("Unauthorized", { status: 401});
+
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
     }
-    
+
     const course = await db.course.findUnique({
       where: {
-         id: courseId,
-         userId: userId,
+        id: courseId,
+        userId: userId,
+      },
+      include: {
+        chapters: {
+          include: {
+            muxData: true,
+          },
         },
-        include: {
-          chapters: {
-            include: {
-              muxData: true,
-            }
-          }
-        }
+      },
     });
 
-    if(!course){
-      return new NextResponse("Not found", { status: 404});
+    if (!course) {
+      return new NextResponse("Not found", { status: 404 });
     }
 
-    for(const chapter of course.chapters){
-      if(chapter.muxData?.assetId){
+    for (const chapter of course.chapters) {
+      if (chapter.muxData?.assetId) {
         await video.assets.delete(chapter.muxData.assetId);
       }
     }
@@ -49,14 +49,13 @@ export async function DELETE(
     const deletedCourse = await db.course.delete({
       where: {
         id: courseId,
-      }
+      },
     });
 
     return NextResponse.json(deletedCourse);
-
-  }catch (error){
+  } catch (error) {
     console.log("[COURSE_ID_DELETE]", error);
-    return new NextResponse("Internal Error", { status: 500});
+    return new NextResponse("Internal Error", { status: 500 });
   }
 }
 
@@ -64,18 +63,17 @@ export async function PATCH(
   req: Request,
   { params }: { params: { courseId: string } }
 ) {
-  const session = await getServerSession(authOptions);
-  
-  const values = await req.json(); 
-   
-   
   try {
-    if (!session?.user) {
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
+    const values = await req.json();
+
+
+    if (!userId) {
       return new NextResponse("Unauthorised", { status: 401 });
     }
-    const userId = session?.user?.id;
-    const { courseId } = await params;
 
+    const { courseId } = await params;
 
     const existingCourse = await db.course.findUnique({
       where: { id: courseId },
@@ -91,8 +89,8 @@ export async function PATCH(
         userId,
       },
       data: {
-        ...values
-      }
+        ...values,
+      },
     });
     return new NextResponse("course updated successfully");
   } catch (error) {
