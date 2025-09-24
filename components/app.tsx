@@ -5,7 +5,7 @@ export const Appbar = () => {
     const session = useSession();
     return <div>
     <button onClick={() => signIn()}>Signin</button>
-    <button onClick={() => signOut()}>Sign out</button>
+    <button onClick={() => signOut({ callbackUrl: "signup" })}>Sign out</button>
     {JSON.stringify(session)}
   </div>
 }
