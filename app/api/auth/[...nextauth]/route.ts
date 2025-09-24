@@ -50,15 +50,17 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+
+     async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      return `${baseUrl}/`;
+    },
+
   },
 };
 
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
-
-
-
-
 
 
 // import NextAuth from "next-auth"
