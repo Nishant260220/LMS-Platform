@@ -1,6 +1,6 @@
+
 import { NextResponse } from "next/server";
 import db from "@/lib/db";
-// import bcrypt from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
@@ -28,11 +28,20 @@ export async function POST(req: Request) {
       data: {
         name,
         email,
-        password, 
+        password,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
       },
     });
 
-    return NextResponse.json(user, { status: 201 });
+    return NextResponse.json(
+      { message: "User created successfully", user },
+      { status: 201 },
+    );
   } catch (error) {
     console.error("SIGNUP_ERROR", error);
     return NextResponse.json(
