@@ -23,7 +23,7 @@ import { Actions } from "./_components/actions";
 
 const courseIdPage = async ({ params }: { params: { courseId: string; chapterId: string } }) => {
   
-  const { courseId, chapterId } = await params;
+  const { courseId } = params;
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
   

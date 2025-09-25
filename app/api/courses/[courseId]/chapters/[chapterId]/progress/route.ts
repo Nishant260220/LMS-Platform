@@ -12,7 +12,7 @@ export async function PUT(
     const session = await getServerSession(authOptions);
     const userId = session?.user?.id;
 
-    const { chapterId } = await params;
+    const { chapterId } = params;
 
     const { isCompleted } = await req.json();
 

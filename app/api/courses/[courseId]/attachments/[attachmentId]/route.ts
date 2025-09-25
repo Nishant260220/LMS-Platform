@@ -10,8 +10,8 @@ export async function Delete(
     try{
         const session = await getServerSession(authOptions);
         const userId = session?.user?.id;
-        const { courseId } = await params;
-        const { attachmentId } = await params;
+        const { courseId } = params;
+        const { attachmentId } = params;
 
         if(!userId){
             return new NextResponse("Unauthorised", { status: 401})

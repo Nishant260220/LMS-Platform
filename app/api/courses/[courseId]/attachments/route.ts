@@ -9,7 +9,7 @@ export async function POST(req: Request, {params}: {params: {courseId: string}})
     try{
         const session = await getServerSession(authOptions);
         const { url } = await req.json();
-        const { courseId } = await params;
+        const { courseId } = params;
         const userId = session?.user?.id;
 
         if(!userId){

@@ -18,7 +18,7 @@ const ChapterIdPage = async({
 
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
-  const { courseId, chapterId } = await params;
+  const { courseId, chapterId } = params;
 
   if(!userId){
     return redirect("/");

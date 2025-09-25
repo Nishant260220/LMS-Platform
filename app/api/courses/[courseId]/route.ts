@@ -15,7 +15,7 @@ export async function DELETE(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    const { courseId } = await params;
+    const { courseId } = params;
     const userId = session?.user?.id;
 
     if (!userId) {
@@ -73,7 +73,7 @@ export async function PATCH(
       return new NextResponse("Unauthorised", { status: 401 });
     }
 
-    const { courseId } = await params;
+    const { courseId } = params;
 
     const existingCourse = await db.course.findUnique({
       where: { id: courseId },

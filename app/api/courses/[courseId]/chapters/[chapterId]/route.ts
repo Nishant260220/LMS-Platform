@@ -15,7 +15,7 @@ export async function DELETE(
 ){
   try{
     const session = await getServerSession(authOptions);
-    const { courseId, chapterId} = await params;
+    const { courseId, chapterId} = params;
     const userId = session?.user?.id;
 
     if(!userId){
@@ -98,7 +98,7 @@ export async function PATCH(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    const { courseId, chapterId } = await params;
+    const { courseId, chapterId } = params;
     const userId = session?.user?.id;
     const { isPublished, ...values } = await req.json();
 

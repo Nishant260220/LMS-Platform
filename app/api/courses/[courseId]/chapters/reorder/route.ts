@@ -10,7 +10,7 @@ export async function PUT(
 ){
     try{
         const session = await getServerSession(authOptions);
-        const { courseId } = await params;
+        const { courseId } = params;
         const userId = session?.user?.id;
 
         if(!userId){
