@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
 import db from "@/lib/db";
 import { isTeacher } from "@/lib/teacher";
+import { authOptions } from "@/lib/auth";
 
 export async function POST(req: Request) {
   

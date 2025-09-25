@@ -1,5 +1,4 @@
 import { getChapter } from "@/actions/get-chapters";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { Banner } from "@/components/banner";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -9,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { File } from "lucide-react";
 import { CourseProgresssButton } from "./_components/course-progress-button";
+import { authOptions } from "@/lib/auth";
 
 const ChapterIdPage = async({
   params

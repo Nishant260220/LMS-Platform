@@ -5,9 +5,9 @@ import { CheckCircle, Clock, InfoIcon } from "lucide-react";
 import { getDashboardCourses } from "@/actions/get-dashboard-courses";
 import { CoursesList } from "@/components/courses-list";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { InfoCard } from "./_components/info-card";
 import { Appbar } from "@/components/app";
+import { authOptions } from "@/lib/auth";
 
 
 

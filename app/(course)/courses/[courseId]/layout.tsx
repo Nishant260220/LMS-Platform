@@ -1,11 +1,11 @@
 import { getProgress } from "@/actions/get-progress";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import db from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import React, { Children } from "react";
 import { CourseSidebar } from "./_components/course-sidebar";
 import { CourseNavbar } from "./_components/course-navbar";
+import { authOptions } from "@/lib/auth";
 
 const CourseLayout = async({
     children,

@@ -1,4 +1,3 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { IconBadge } from "@/components/icon-badge";
 import db from "@/lib/db";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
@@ -12,6 +11,7 @@ import ChapterVideo from "./_components/chapter-video-form";
 import ChapterVideoForm from "./_components/chapter-video-form";
 import { Banner } from "@/components/banner";
 import { ChapterActions } from "./_components/chapter-action";
+import { authOptions } from "@/lib/auth";
 
 const ChapterIdPage = async ({
   params,

@@ -1,4 +1,3 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { IconBadge } from "@/components/icon-badge";
 import db from "@/lib/db";
 import {
@@ -20,6 +19,7 @@ import AttachmentForm from "./_components/attachment-form";
 import ChaptersForm from "./_components/chapters-form";
 import { Banner } from "@/components/banner";
 import { Actions } from "./_components/actions";
+import { authOptions } from "@/lib/auth";
 
 const courseIdPage = async ({ params }: { params: { courseId: string; chapterId: string } }) => {
   

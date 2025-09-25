@@ -1,10 +1,10 @@
 
 import { getAnalytics } from '@/actions/get-analytics';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { DataCard } from './_components/data-card';
 import { Chart } from './_components/chart';
+import { authOptions } from '@/lib/auth';
 
 
 

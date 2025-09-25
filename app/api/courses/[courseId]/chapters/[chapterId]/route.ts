@@ -1,8 +1,8 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import db from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import Mux from "@mux/mux-node";
+import { authOptions } from "@/lib/auth";
 
 const { video } = new Mux({
   tokenId: process.env.MUX_TOKEN_ID!,
