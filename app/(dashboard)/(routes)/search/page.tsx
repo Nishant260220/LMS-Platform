@@ -1,19 +1,20 @@
 import db from '@/lib/db'
-import React from 'react'
+import React, { JSX } from 'react'
 import { Categories } from './_components/categories';
 import { SearchInput } from '@/components/search-input';
 import { getCourses } from '@/actions/get-courses';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 import { CoursesList } from '@/components/courses-list';
+import { authOptions } from '@/lib/auth';
 
+interface SearchParams {
+  title?: string;
+  categoryId?: string;
+}
 
 interface SearchPageProps {
-  searchParams: {
-    title: string;
-    categoryId: string;
-  }
+  searchParams: Promise<SearchParams>;
 }
 const Searchpage = async({
   searchParams,
@@ -21,6 +22,7 @@ const Searchpage = async({
 
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
+  const { title, categoryId } = await searchParams;
 
   if(!userId){
     return redirect("/")
@@ -33,7 +35,8 @@ const Searchpage = async({
 
   const courses = await getCourses({
     userId,
-    ...searchParams
+    title: title,
+    categoryId: categoryId,
   })
   return (
     <>
