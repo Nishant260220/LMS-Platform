@@ -10,11 +10,14 @@ import { File } from "lucide-react";
 import { CourseProgresssButton } from "./_components/course-progress-button";
 import { authOptions } from "@/lib/auth";
 
-const ChapterIdPage = async({
-  params
-}: {
-  params: { courseId: string; chapterId: string }
-}) => {
+interface ChapterPageProps {
+  params: {
+    courseId: string;
+    chapterId: string;
+  };
+}
+
+const ChapterIdPage = async({ params }: ChapterPageProps) => {
 
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
