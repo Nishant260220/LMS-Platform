@@ -11,17 +11,17 @@ import { CourseProgresssButton } from "./_components/course-progress-button";
 import { authOptions } from "@/lib/auth";
 
 interface ChapterPageProps {
-  params: {
+   params: Promise<{
     courseId: string;
     chapterId: string;
-  };
+  }>;
 }
 
 const ChapterIdPage = async({ params }: ChapterPageProps) => {
 
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
-  const { courseId, chapterId } = params;
+  const { courseId, chapterId } = await params;
 
   if(!userId){
     return redirect("/");
