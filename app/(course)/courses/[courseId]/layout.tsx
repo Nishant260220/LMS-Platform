@@ -11,11 +11,11 @@ const CourseLayout = async({
     children,
     params
 }: { children: React.ReactNode;
-    params: { courseId: string};
+    params: Promise<{ courseId: string}>;
 }) => {
     const session = await getServerSession(authOptions);
     const userId = session?.user?.id;
-    const { courseId } = params;
+    const { courseId } = await params;
 
     if(!userId){
         return redirect("/");

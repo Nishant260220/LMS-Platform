@@ -5,12 +5,12 @@ import { NextResponse } from "next/server";
 import { id } from "zod/v4/locales";
 
 export async function PUT(
-    req: Request, 
-    { params }: { params: { courseId: string}}
+    req: Request,
+    { params }: { params: Promise<{ courseId: string}>}
 ){
     try{
         const session = await getServerSession(authOptions);
-        const { courseId } = params;
+        const { courseId } = await params;
         const userId = session?.user?.id;
 
         if(!userId){
@@ -30,14 +30,14 @@ export async function PUT(
              return new NextResponse("Unauthorized", { status: 401 });
         }
 
-        for(let item of list){
+        for(const item of list){
             await db.chapter.update({
                 where: {id: item.id},
                 data: { position: item.position}
             });
         }
         return new NextResponse("Success", { status: 200});
-        
+
     }catch (error){
         console.log("[REORDER]",error);
         return new NextResponse("Internal error", { status: 500 });

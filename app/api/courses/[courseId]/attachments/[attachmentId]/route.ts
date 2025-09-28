@@ -3,15 +3,14 @@ import db from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function Delete(
+export async function DELETE(
     req: Request,
-    { params }: {params: {courseId: string, attachmentId: string}}
+    { params }: {params: Promise<{courseId: string, attachmentId: string}>}
 ){
     try{
         const session = await getServerSession(authOptions);
         const userId = session?.user?.id;
-        const { courseId } = params;
-        const { attachmentId } = params;
+        const { courseId, attachmentId } =await params;
 
         if(!userId){
             return new NextResponse("Unauthorised", { status: 401})

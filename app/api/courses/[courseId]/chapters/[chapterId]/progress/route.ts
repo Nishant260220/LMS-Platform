@@ -6,13 +6,13 @@ import { NextResponse } from "next/server";
 
 export async function PUT(
   req: Request,
-  { params }: { params: { courseId: string; chapterId: string } }
+  { params }: { params: Promise<{ courseId: string; chapterId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
     const userId = session?.user?.id;
 
-    const { chapterId } = params;
+    const { chapterId } = await params;
 
     const { isCompleted } = await req.json();
 

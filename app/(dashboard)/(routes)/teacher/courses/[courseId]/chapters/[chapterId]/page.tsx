@@ -7,7 +7,6 @@ import { redirect } from "next/navigation";
 import ChapterTitleForm from "./_components/chapter-title-form";
 import ChapterDescriptionForm from "./_components/chapter-description-form";
 import ChapterAccessForm from "./_components/chapter-access-form";
-import ChapterVideo from "./_components/chapter-video-form";
 import ChapterVideoForm from "./_components/chapter-video-form";
 import { Banner } from "@/components/banner";
 import { ChapterActions } from "./_components/chapter-action";
@@ -16,11 +15,11 @@ import { authOptions } from "@/lib/auth";
 const ChapterIdPage = async ({
   params,
 }: {
-  params: { courseId: string; chapterId: string };
+  params: Promise<{ courseId: string; chapterId: string }>;
 }) => {
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
-  const { courseId, chapterId } = params;
+  const { courseId, chapterId } = await params;
 
   if (!userId) {
     return redirect("/");

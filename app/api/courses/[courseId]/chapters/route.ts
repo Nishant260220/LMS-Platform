@@ -5,13 +5,13 @@ import { NextResponse } from "next/server";
 
 export async function POST(
     req: Request,
-    { params }: { params: { courseId: string}}
+    { params }: { params: Promise<{ courseId: string}>}
 ){
     try{
         const session = await getServerSession(authOptions);
         const { title } = await req.json();
         const userId = session?.user?.id;
-        const { courseId } = params;
+        const { courseId } = await params;
 
         if(!userId){
             return new NextResponse("Unauthorized", { status: 401 });
@@ -31,7 +31,7 @@ export async function POST(
         const lastChapter = await db.chapter.findFirst({
             where: {
                 courseId: courseId,
-            }, 
+            },
             orderBy: {
                 position: "desc"
             }

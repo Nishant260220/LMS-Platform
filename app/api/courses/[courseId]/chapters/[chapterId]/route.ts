@@ -11,11 +11,11 @@ const { video } = new Mux({
 
 export async function DELETE(
    req: Request,
-  { params }: { params: { courseId: string; chapterId: string } }
+  { params }: { params: Promise<{ courseId: string; chapterId: string }> }
 ){
   try{
     const session = await getServerSession(authOptions);
-    const { courseId, chapterId} = params;
+    const { courseId, chapterId} = await params;
     const userId = session?.user?.id;
 
     if(!userId){
@@ -94,11 +94,11 @@ export async function DELETE(
 }
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string; chapterId: string } }
+  { params }: { params: Promise<{ courseId: string; chapterId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
-    const { courseId, chapterId } = params;
+    const { courseId, chapterId } = await params;
     const userId = session?.user?.id;
     const { isPublished, ...values } = await req.json();
 

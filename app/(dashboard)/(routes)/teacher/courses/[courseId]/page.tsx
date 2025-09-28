@@ -3,9 +3,7 @@ import db from "@/lib/db";
 import {
   CircleDollarSign,
   File,
-  Icon,
   LayoutDashboard,
-  ListCheck,
   ListChecks,
 } from "lucide-react";
 import { getServerSession } from "next-auth";
@@ -21,12 +19,12 @@ import { Banner } from "@/components/banner";
 import { Actions } from "./_components/actions";
 import { authOptions } from "@/lib/auth";
 
-const courseIdPage = async ({ params }: { params: { courseId: string; chapterId: string } }) => {
-  
-  const { courseId } = params;
+const courseIdPage = async ({ params }: { params: Promise<{ courseId: string; chapterId: string }> }) => {
+
+  const { courseId } = await params;
   const session = await getServerSession(authOptions);
   const userId = session?.user?.id;
-  
+
   if (!session?.user) {
     return redirect("/");
   }
@@ -74,7 +72,7 @@ const courseIdPage = async ({ params }: { params: { courseId: string; chapterId:
 
   const completionText = `(${completedFields}/${totalFields})`;
 
-  const isComplete = requiredFields.every(Boolean); 
+  const isComplete = requiredFields.every(Boolean);
 
   return (
     <>
@@ -135,7 +133,7 @@ const courseIdPage = async ({ params }: { params: { courseId: string; chapterId:
             </div>
             <AttachmentForm initialData={course} courseId={course.id} />
         </div>
-       
+
       </div>
     </div>
     </>

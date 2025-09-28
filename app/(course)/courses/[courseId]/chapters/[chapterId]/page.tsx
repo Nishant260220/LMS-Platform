@@ -47,8 +47,12 @@ const ChapterIdPage = async({ params }: ChapterPageProps) => {
 
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
+  const playbackId = muxData?.playbackId;
 
-  
+  if(!playbackId){
+    return redirect("/");
+  }
+
   return (
     <div>
       {userProgress?.isCompleted && (
@@ -71,7 +75,7 @@ const ChapterIdPage = async({ params }: ChapterPageProps) => {
            title={chapter.title}
            courseId={courseId}
            nextChapterId={nextChapter?.id}
-           playbackId={muxData?.playbackId!}
+           playbackId={playbackId}
            isLocked={isLocked}
            completeOnEnd={completeOnEnd}
           />
@@ -88,10 +92,10 @@ const ChapterIdPage = async({ params }: ChapterPageProps) => {
               nextChapterId={nextChapter?.id}
               isCompleted={!!userProgress?.isCompleted}
              />
-             
+
             ): (
               <CourseEnrollButton
-                courseId={params.courseId}
+                courseId={courseId}
                 price={course.price!}
               />
             )}
@@ -105,7 +109,7 @@ const ChapterIdPage = async({ params }: ChapterPageProps) => {
             <Separator/>
             <div className="p-4">
               {attachments.map((attachment) => (
-                <a 
+                <a
                  href={attachment.url || undefined}
                  target="_blank"
                  key={attachment.id}
@@ -115,7 +119,7 @@ const ChapterIdPage = async({ params }: ChapterPageProps) => {
                   <p className="line-clamp-1">
                     {attachment.name}
                   </p>
-                  
+
                  </a>
               ))}
             </div>

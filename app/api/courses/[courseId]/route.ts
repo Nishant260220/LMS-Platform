@@ -11,11 +11,11 @@ const { video } = new Mux({
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { courseId: string } }
+  { params }: { params: Promise<{ courseId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
-    const { courseId } = params;
+    const { courseId } = await params;
     const userId = session?.user?.id;
 
     if (!userId) {
@@ -61,7 +61,7 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { courseId: string } }
+  { params }: { params: Promise<{ courseId: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -73,7 +73,7 @@ export async function PATCH(
       return new NextResponse("Unauthorised", { status: 401 });
     }
 
-    const { courseId } = params;
+    const { courseId } = await params;
 
     const existingCourse = await db.course.findUnique({
       where: { id: courseId },
@@ -93,7 +93,7 @@ export async function PATCH(
       },
     });
     return new NextResponse("course updated successfully");
-  } catch (error) {
+  } catch {
     return new NextResponse("Internal error", { status: 500 });
   }
 }

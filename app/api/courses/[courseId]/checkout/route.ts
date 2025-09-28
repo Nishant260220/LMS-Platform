@@ -8,12 +8,12 @@ import Stripe from "stripe";
 
 export async function POST(
     req: Request,
-    { params }: { params: { courseId: string }}
+    { params }: { params: Promise<{ courseId: string }>}
 ){
     try{
         const session = await getServerSession(authOptions);
-        const { courseId } = params;
-        
+        const { courseId } = await params;
+
         if(!session?.user || !session?.user?.id || !session?.user?.email) {
             return new NextResponse("Unauhtorized", { status: 401 });
         }
@@ -76,7 +76,7 @@ export async function POST(
             }
         })
        }
-    
+
        const sesson = await stripe.checkout.sessions.create({
         customer: stripeCustomer.stripeCustomerId,
         line_items,
@@ -89,7 +89,7 @@ export async function POST(
         }
        });
 
-       return NextResponse.json({ url: sesson.url });  
+       return NextResponse.json({ url: sesson.url });
 
 
     } catch (error) {

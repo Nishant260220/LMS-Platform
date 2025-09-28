@@ -1,15 +1,14 @@
 import { authOptions } from "@/lib/auth";
 import db from "@/lib/db";
-import { isTeacher } from "@/lib/teacher";
 import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
 
-export async function POST(req: Request, {params}: {params: {courseId: string}}){
+export async function POST(req: Request, {params}: {params: Promise<{courseId: string}>}){
 
     try{
         const session = await getServerSession(authOptions);
         const { url } = await req.json();
-        const { courseId } = params;
+        const { courseId } = await params;
         const userId = session?.user?.id;
 
         if(!userId){
@@ -26,7 +25,7 @@ export async function POST(req: Request, {params}: {params: {courseId: string}})
         if(!courseOwner){
             return new NextResponse("Unauthorized", {status: 401})
         }
-         
+
         const attachment = await db.attachment.create({
             data: {
                 url,
@@ -36,7 +35,7 @@ export async function POST(req: Request, {params}: {params: {courseId: string}})
         });
 
         return NextResponse.json(attachment);
-        
+
 
     }catch(error){
         console.log("COURSE-ID_ATTACHMENTS", error)
